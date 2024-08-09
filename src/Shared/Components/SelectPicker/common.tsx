@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+import Tippy, { TippyProps } from '@tippyjs/react'
 import {
     components,
     DropdownIndicatorProps,
@@ -26,7 +27,14 @@ import {
 import { Progressing } from '@Common/Progressing'
 import { ReactComponent as ICCaretDown } from '@Icons/ic-caret-down.svg'
 import { ReactComponent as ICClose } from '@Icons/ic-close.svg'
+import { ConditionalWrap } from '@Common/Helper'
 import { SelectPickerOptionType, SelectPickerProps } from './type'
+
+const renderWithTippy = (tippyProps: TippyProps) => (children: React.ReactElement) => (
+    <Tippy {...tippyProps} className={`default-tt ${tippyProps?.className || ''}`}>
+        {children}
+    </Tippy>
+)
 
 export const SelectPickerDropdownIndicator = (props: DropdownIndicatorProps<SelectPickerOptionType>) => {
     const { isDisabled } = props
@@ -95,30 +103,32 @@ export const SelectPickerOption =
     ({ disableDescriptionEllipsis = false }: SelectPickerProps) =>
     (props: OptionProps<SelectPickerOptionType>) => {
         const { label, data } = props
-        const { description, startIcon, endIcon } = data ?? {}
+        const { description, startIcon, endIcon, tooltipProps } = data ?? {}
         const showDescription = !!description
 
         return (
             <components.Option {...props}>
-                <div className={`flex left ${showDescription ? 'top' : ''} dc__gap-8`}>
-                    {startIcon && (
-                        <div className="dc__no-shrink icon-dim-20 flex dc__fill-available-space">{startIcon}</div>
-                    )}
-                    <div className="flex-grow-1">
-                        <h4 className="m-0 cn-9 fs-13 fw-4 lh-20 dc__truncate">{label}</h4>
-                        {/* Add support for custom ellipsis if required */}
-                        {showDescription && (
-                            <p
-                                className={`m-0 fs-12 fw-4 lh-18 cn-7 ${!disableDescriptionEllipsis ? 'dc__truncate' : ''}`}
-                            >
-                                {description}
-                            </p>
+                <ConditionalWrap condition={!!tooltipProps?.content} wrap={renderWithTippy(tooltipProps)}>
+                    <div className={`flex left ${showDescription ? 'top' : ''} dc__gap-8`}>
+                        {startIcon && (
+                            <div className="dc__no-shrink icon-dim-20 flex dc__fill-available-space">{startIcon}</div>
+                        )}
+                        <div className="flex-grow-1">
+                            <h4 className="m-0 cn-9 fs-13 fw-4 lh-20 dc__truncate">{label}</h4>
+                            {/* Add support for custom ellipsis if required */}
+                            {showDescription && (
+                                <p
+                                    className={`m-0 fs-12 fw-4 lh-18 cn-7 ${!disableDescriptionEllipsis ? 'dc__truncate' : ''}`}
+                                >
+                                    {description}
+                                </p>
+                            )}
+                        </div>
+                        {endIcon && (
+                            <div className="dc__no-shrink icon-dim-20 flex dc__fill-available-space">{endIcon}</div>
                         )}
                     </div>
-                    {endIcon && (
-                        <div className="dc__no-shrink icon-dim-20 flex dc__fill-available-space">{endIcon}</div>
-                    )}
-                </div>
+                </ConditionalWrap>
             </components.Option>
         )
     }

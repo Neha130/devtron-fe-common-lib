@@ -16,6 +16,7 @@
 
 import { OptionType } from '@Common/Types'
 import { ComponentSizeType } from '@Shared/constants'
+import { TippyProps } from '@tippyjs/react'
 import { ReactElement, ReactNode } from 'react'
 import { Props as ReactSelectProps } from 'react-select'
 
@@ -32,6 +33,10 @@ export interface SelectPickerOptionType extends OptionType<number | string, Reac
      * Icon at the end of the option
      */
     endIcon?: ReactElement
+    /**
+     * Props passed to show the tippy on option
+     */
+    tooltipProps?: TippyProps
 }
 
 export enum SelectPickerVariantType {
