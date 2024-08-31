@@ -20,6 +20,7 @@ import { errorId, FieldErrorProps } from '@rjsf/utils'
 import { ReactComponent as Error } from '../../../Assets/Icon/ic-warning.svg'
 
 export const FieldErrorTemplate = ({ errors = [], idSchema }: FieldErrorProps) => {
+    // @ts-expect-error FIXME
     const id = errorId(idSchema)
 
     return (

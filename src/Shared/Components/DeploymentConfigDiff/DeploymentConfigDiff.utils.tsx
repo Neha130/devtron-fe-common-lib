@@ -278,9 +278,9 @@ const getDeploymentTemplateDiffViewData = (data: DeploymentTemplateDTO | null, s
     const codeEditorValue = {
         displayName: 'data',
         value: _data
-            ? YAMLStringify(_data, {
+            ? (YAMLStringify(_data, {
                   sortMapEntries: (a, b) => yamlComparatorBySortOrder(a, b, sortOrder),
-              }) ?? ''
+              }) ?? '')
             : '',
     }
 

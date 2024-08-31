@@ -105,6 +105,7 @@ export const ObjectFieldTemplate = (props: ObjectFieldTemplateProps<any, RJSFFor
         <fieldset id={idSchema.$id}>
             {showTitle && (
                 <TitleField
+                    // @ts-expect-error
                     id={titleId(idSchema)}
                     title={title}
                     required={required}
