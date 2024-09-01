@@ -39,8 +39,7 @@ const FilterSelectPicker = ({
     }
 
     const handleSelectOnChange: SelectPickerProps<number | string, true>['onChange'] = (selectedOptionsToUpdate) => {
-        // @ts-expect-error FIXME
-        setSelectedOptions(structuredClone(selectedOptionsToUpdate))
+        setSelectedOptions(structuredClone(selectedOptionsToUpdate) as SelectPickerOptionType[])
     }
 
     const handleMenuClose = () => {
